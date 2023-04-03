@@ -1,1 +1,2 @@
 model(h-det) : ['bird', 'elephant', 'person', 'wild_boar'] - 180 x 180 x 1
+m(e-15...) : ['bird', 'elephant', 'person', 'undetected', 'wild_boar'] 180 x 180 x 1
