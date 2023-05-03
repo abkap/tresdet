@@ -2,11 +2,7 @@ from fastapi import FastAPI
 from pydantic import BaseModel 
 import tensorflow as tf 
 import numpy as np 
-from PIL import Image
-import io
-import base64
 import json
-
 from firebase_storage.firebase_storage_defs import FirebaseStorage
 
 #predefined 
@@ -21,7 +17,7 @@ def get_animal_name(img_location : str , model) :
     
     try : 
         
-        img = firebase_storage.get_image_for_pil(url=img_location).convert('L')
+        img = firebase_storage.get_image_for_pil(url=img_location).convert('L') # covnert to grayscale
         img = img.rotate(270)
         img = img.resize((img_height,img_width))
         img_array = np.array(img)
@@ -71,7 +67,8 @@ class Item(BaseModel) :
 def root() : 
     return {
         "Company" : "TresDet" , 
-        "Status" : "working perfectly"
+        "Status" : "working perfectly",
+        'Last updation' : '03/05/2023'
     }
 
 
