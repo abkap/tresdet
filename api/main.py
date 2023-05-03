@@ -7,15 +7,22 @@ import io
 import base64
 import json
 
+from firebase_storage.firebase_storage_defs import FirebaseStorage
+
 #predefined 
-model = tf.keras.models.load_model('./m(e-15)-0.821-(h-det,ud).h5')
-def get_animal_name(img_str : str , model) : 
+model = tf.keras.models.load_model('./m-esp32(u-1,e-35)-0.8437-(h-det,ud)(added-bird-datas).h5')
+
+#initializations 
+firebase_storage = FirebaseStorage()
+
+def get_animal_name(img_location : str , model) : 
     class_names = ['bird', 'elephant', 'person', 'undetected', 'wild_boar']
     img_height , img_width , color_mode = 180,180,"grayscale"
     
     try : 
-        base64_decoded = base64.b64decode(img_str)
-        img = Image.open(io.BytesIO(base64_decoded)).convert("L")
+        
+        img = firebase_storage.get_image_for_pil(url=img_location).convert('L')
+        img = img.rotate(270)
         img = img.resize((img_height,img_width))
         img_array = np.array(img)
   
@@ -58,7 +65,7 @@ class Item(BaseModel) :
     FarmFeildId : int
     CameraId : int
     CaptureCount : int  
-    ImageStr : str
+    ImageLocation : str
 
 @app.get("/") 
 def root() : 
@@ -70,7 +77,7 @@ def root() :
 
 @app.post("/detect") 
 def detect_image(cam_data : Item): 
-    result = get_animal_name(cam_data.ImageStr, model)
+    result = get_animal_name(cam_data.ImageLocation, model)
     print(type(result))
     result = json.dumps(str(result))
     return result
