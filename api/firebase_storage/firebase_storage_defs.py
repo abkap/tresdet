@@ -1,13 +1,16 @@
-import firebase_admin
-from firebase_admin import credentials,storage
+
+from firebase_admin import storage
 from PIL import Image
 import io
+import firebase_admin 
+from firebase_admin import credentials
 
 class FirebaseEssentials : 
     def __init__(self) -> None:
-        cred = credentials.Certificate("tresdet-firebase-adminsdk.json")
-        firebase_admin.initialize_app(cred, {
-        'storageBucket' : "tresdet-478dd.appspot.com"
+        if not firebase_admin._apps :
+            cred = credentials.Certificate("tresdet-firebase-adminsdk.json")
+            firebase_admin.initialize_app(cred, {
+            'storageBucket' : "tresdet-478dd.appspot.com"
 })
 
 
