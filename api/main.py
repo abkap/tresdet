@@ -97,6 +97,14 @@ def root() :
 def detect_image(cam_data : Item): 
     result = get_animal_name(cam_data.ImageLocation, model)
     print(type(result))
+    animal_name = result.get("AnimalName")
+    print(animal_name)
+    return animal_name if animal_name else "error"
+
+@app.post("/detect_json") 
+def detect_image(cam_data : Item): 
+    result = get_animal_name(cam_data.ImageLocation, model)
+    print(type(result))
     result = json.dumps(str(result))
     return result
 
