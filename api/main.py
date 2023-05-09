@@ -20,7 +20,8 @@ def get_animal_name(img_location : str , model) :
     
     try : 
         
-        img = firebase_storage.get_image_for_pil(url=img_location).convert('L') # covnert to grayscale
+        img,img_public_url = firebase_storage.get_image_for_pil(url=img_location)
+        img = img.convert('L') # covnert to grayscale
         img = img.rotate(270)
         img = img.resize((img_height,img_width))
         img_array = np.array(img)
@@ -55,7 +56,8 @@ def get_animal_name(img_location : str , model) :
                     "AnimalName" : animal_detected, 
                     "Accuracy": float(animal_detected_score), # otherwise type is numpy.float32
                     "Response" : "siren",
-                    "Date" : date_string 
+                    "Date" : date_string ,
+                    "PublicUrl" : img_public_url
         
                 }
             )
