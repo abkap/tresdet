@@ -1,7 +1,7 @@
 FROM ubuntu:20.04
 WORKDIR /api
 SHELL ["/bin/bash","-c"]
-ADD . . 
+ADD requirements.txt . 
 RUN apt update && apt upgrade -y 
 RUN apt install curl -y
 RUN curl https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -o Miniconda3-latest-Linux-x86_64.sh

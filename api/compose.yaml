@@ -1,0 +1,8 @@
+services:
+  web:
+    container_name: fast_api
+    build: .
+    ports:
+      - "8080:8000"
+    volumes:
+      - ".:/api"
